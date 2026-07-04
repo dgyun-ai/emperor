@@ -1,0 +1,205 @@
+# emperor 完整配置示例
+# ─────────────────────────────────────────────────────────────────────────────
+# 用法：
+#   cp config.yaml.example ~/.emperor/config.yaml
+#   编辑 API Key 与模型后执行：emperor config show
+#
+# Profile 隔离（可选）：
+#   cp config.yaml.example ~/.emperor/profiles/work/config.yaml
+#   emperor -p work chat
+#
+# 环境变量可覆盖部分配置，见 docs/DEPLOYMENT.md
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── LLM 提供商（OpenAI 兼容 Chat Completions）──────────────────────────────
+provider:
+  # 标识名：openrouter | openai | custom | local 等（仅用于日志与识别）
+  provider: openrouter
+
+  # 模型 ID（须与端点支持的名称一致）
+  model: anthropic/claude-sonnet-4
+
+  # API 根地址（须包含 /v1）
+  base_url: https://openrouter.ai/api/v1
+
+  # 方式一（推荐）：从环境变量读取密钥
+  api_key_env: OPENROUTER_API_KEY
+
+  # 方式二：直接写在配置中（勿提交到 git）
+  # api_key: sk-or-v1-xxxxxxxx
+
+# ── 备用提供商（主端点 429/5xx 时按顺序尝试）────────────────────────────
+fallback_providers:
+  - provider: openai
+    model: gpt-4o
+    base_url: https://api.openai.com/v1
+    api_key_env: OPENAI_API_KEY
+
+  # - provider: custom
+  #   model: backup-model
+  #   base_url: https://backup.example.com/v1
+  #   api_key_env: BACKUP_API_KEY
+
+# ── Agent 行为 ─────────────────────────────────────────────────────────────
+agent:
+  # 单轮对话内最大工具调用迭代次数
+  max_turns: 90
+
+  # 上下文窗口上限（用于 TUI 百分比显示与压缩阈值计算）
+  max_context_tokens: 128000
+
+  # 回复语言：zh（简体中文）| en
+  language: zh
+
+  # 压缩时保留的最近消息条数（与 compression.protect_last_n 建议保持一致）
+  protect_last_n: 20
+
+  # 触发压缩的上下文占比（0.1–1.0，与 compression.threshold 建议保持一致）
+  compress_threshold: 0.5
+
+# ── CLI / TUI 界面语言 ─────────────────────────────────────────────────────
+ui:
+  # zh：中文界面 | en：英文界面
+  language: zh
+
+  # CLI 皮肤：default | slate | mono | crimson，或 ~/.emperor/skins/<name>.yaml
+  skin: default
+
+  # 底部固定输入区（prompt_toolkit Application）；false 则回退为简单 PromptSession
+  fixed_input: true
+
+# ── 工具集 ─────────────────────────────────────────────────────────────────
+tools:
+  # 启用的 toolset（白名单）；为空列表时表示启用全部已注册工具
+  enabled_toolsets:
+    - core        # echo, clarify
+    - file        # read, write, patch, search
+    - terminal    # terminal_run
+    - web         # web_search, web_extract
+    - todo        # todo
+    - agent       # memory, session_search
+    - delegation  # delegate_task
+    - code        # execute_code
+    - browser     # browser_fetch
+    - cron        # cron 管理
+
+  # 禁用的 toolset（黑名单，优先级高于 enabled）
+  disabled_toolsets: []
+
+  # 危险命令（rm -rf、写系统路径等）是否要求审批（CLI 默认拒绝）
+  require_approval: true
+
+# ── 终端执行后端 ───────────────────────────────────────────────────────────
+terminal:
+  # local | docker | ssh | modal（ssh/modal 为 stub）
+  backend: local
+
+  # docker 后端使用的镜像
+  docker_image: python:3.11-slim
+
+  # 命令超时（秒）
+  timeout_seconds: 120
+
+# ── 上下文压缩 ─────────────────────────────────────────────────────────────
+compression:
+  enabled: true
+
+  # 当估算 token 达到 max_context_tokens * threshold 时压缩
+  threshold: 0.5
+
+  # 压缩后保留的最近完整消息条数
+  protect_last_n: 20
+
+# ── 长期记忆（MEMORY.md / USER.md）────────────────────────────────────────
+memory:
+  max_memory_chars: 50000
+  max_user_chars: 10000
+
+# ── 消息网关 ───────────────────────────────────────────────────────────────
+gateway:
+  enabled: false
+
+  host: 0.0.0.0
+  port: 8080
+
+  # Telegram Bot Token（或设环境变量 TELEGRAM_BOT_TOKEN）
+  # telegram_token: "123456:ABC..."
+  telegram_token_env: TELEGRAM_BOT_TOKEN
+
+  # Webhook 校验密钥（emperor gateway start --webhook）
+  webhook_secret: change-me-to-a-random-string
+
+# ── OpenAI 兼容 API 服务 ───────────────────────────────────────────────────
+api_server:
+  enabled: false
+
+  host: 127.0.0.1
+  port: 9118
+
+# ── 子 Agent 委托 ──────────────────────────────────────────────────────────
+delegation:
+  # 每个子 Agent 的最大迭代次数
+  max_iterations: 50
+
+# ── Kanban 看板 ────────────────────────────────────────────────────────────
+kanban:
+  dispatch_in_gateway: true
+  dispatch_interval_seconds: 60
+  failure_limit: 2
+  dispatch_stale_timeout_seconds: 14400
+
+# ── Web Dashboard（Kanban + Chat SSE + 模型配置）────────────────────────────
+dashboard:
+  host: 127.0.0.1
+  port: 9119
+  kanban:
+    lane_by_profile: true
+    render_markdown: true
+    default_tenant: ""
+    include_archived_by_default: false
+  chat:
+    default_toolsets:
+      - core
+      - file
+      - terminal
+      - web
+      - todo
+      - kanban
+    persist_sessions: true
+    ask_user_questions: true
+
+# ── 日志 ───────────────────────────────────────────────────────────────────
+# DEBUG | INFO | WARNING | ERROR（也可用环境变量 EMPEROR_LOG_LEVEL）
+log_level: WARNING
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 其他配置场景（复制到上方 provider 块替换即可）
+# ═══════════════════════════════════════════════════════════════════════════
+
+# --- OpenAI 官方 API ---
+# provider:
+#   provider: openai
+#   model: gpt-4o
+#   base_url: https://api.openai.com/v1
+#   api_key_env: OPENAI_API_KEY
+
+# --- 自定义 OpenAI 兼容网关（OneAPI / SiliconFlow / 自建等）---
+# provider:
+#   provider: custom
+#   model: your-model-id
+#   base_url: https://your-gateway.example.com/v1
+#   api_key_env: YOUR_API_KEY
+
+# --- 本地 Ollama ---
+# provider:
+#   provider: local
+#   model: qwen2.5:7b
+#   base_url: http://127.0.0.1:11434/v1
+#   api_key: ollama
+
+# --- 本地 LM Studio ---
+# provider:
+#   provider: local
+#   model: local-model
+#   base_url: http://127.0.0.1:1234/v1
+#   api_key: lm-studio

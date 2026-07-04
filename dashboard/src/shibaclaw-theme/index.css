@@ -1,0 +1,275 @@
+/* ShibaClaw theme — ported for Emperor dashboard */
+@import url("./vars.css");
+@import url("./sidebar.css");
+@import url("./chat.css");
+@import url("./responsive.css");
+@import url("./panels.css");
+@import url("./modals.css");
+@import url("./modals_responsive.css");
+@import url("./login.css");
+@import url("./components.css");
+@import url("./notification-center.css");
+@import url("./profiles.css");
+@import url("./monitor.css");
+
+/* Emperor extensions */
+.emperor-kanban-view {
+  flex: 1;
+  overflow: auto;
+  padding: 16px;
+  background: var(--bg-primary);
+  height: 100%;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+.emperor-hidden {
+  display: none !important;
+}
+
+/* Sidebar session buttons — native <button> white background fix */
+button.history-item,
+button.history-item-main {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid transparent;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  padding: 0;
+  cursor: pointer;
+}
+
+button.history-item {
+  width: 100%;
+  padding: 10px 12px;
+}
+
+.chat-header-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-left: auto;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.chat-header-delete:hover:not(:disabled) {
+  color: var(--accent-red);
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+.chat-header-delete:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.workspace-summary-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.workspace-summary-row .status-dot {
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.workspace-provider {
+  min-width: 0;
+  word-break: break-word;
+}
+
+.workspace-provider strong {
+  color: var(--text-primary);
+}
+
+.context-badge {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.btn-stop {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0 auto 8px;
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  color: var(--accent-red);
+  cursor: pointer;
+}
+
+/* Welcome / bootstrap page (pre-login) */
+.welcome-shell {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  gap: 1.5rem;
+  place-items: center;
+  padding: 2rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: auto;
+}
+
+.welcome-hero,
+.welcome-panel {
+  width: min(1120px, 100%);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+}
+
+.welcome-hero {
+  padding: 2rem;
+}
+
+.hero-badge {
+  display: inline-flex;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+  background: var(--shiba-gold-dim);
+  color: var(--shiba-gold);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.welcome-hero h1 {
+  margin: 1rem 0 0.5rem;
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--text-primary);
+}
+
+.welcome-hero p,
+.welcome-panel p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.welcome-panel {
+  padding: 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.welcome-panel h2 {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.form-grid .full {
+  grid-column: 1 / -1;
+}
+
+.welcome-panel label {
+  display: grid;
+  gap: 0.45rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.welcome-panel input,
+.welcome-panel textarea,
+.welcome-panel select {
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.primary-btn,
+.login-btn {
+  justify-self: start;
+  padding: 0.7rem 1.25rem;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--shiba-gold);
+  color: var(--text-on-accent);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primary-btn:disabled,
+.login-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.inline-error {
+  color: var(--accent-red);
+  font-size: 0.9rem;
+}
+
+.profile-preview-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.profile-preview {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+}
+
+.profile-preview strong {
+  display: block;
+  color: var(--text-primary);
+}
+
+.profile-preview span {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.boot-error-panel {
+  max-width: 640px;
+  padding: 2rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.boot-error-panel h2 {
+  margin: 0 0 0.75rem;
+  color: var(--text-primary);
+}
+
+.boot-error-panel p {
+  color: var(--text-secondary);
+}

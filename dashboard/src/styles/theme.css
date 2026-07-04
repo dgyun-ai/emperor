@@ -1,0 +1,620 @@
+:root {
+  --bg: #09111f;
+  --bg-elevated: #0f1b2d;
+  --panel: rgba(11, 20, 35, 0.88);
+  --panel-strong: #13233b;
+  --border: rgba(128, 166, 225, 0.18);
+  --border-strong: rgba(128, 166, 225, 0.28);
+  --text: #ecf4ff;
+  --muted: #89a1c6;
+  --accent: #6bd3ff;
+  --accent-soft: linear-gradient(135deg, #6bd3ff 0%, #39b36b 100%);
+  --success: #57d389;
+  --warning: #f6c866;
+  --danger: #ff7b7b;
+  --radius: 18px;
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+  --font: "SF Pro Display", "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(44, 126, 255, 0.18), transparent 30%),
+    radial-gradient(circle at top right, rgba(57, 179, 107, 0.14), transparent 24%),
+    linear-gradient(180deg, #09111f 0%, #07101b 100%);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  color: var(--text);
+  background: rgba(10, 19, 32, 0.92);
+}
+
+button {
+  cursor: pointer;
+  transition: 120ms ease;
+}
+
+button:hover {
+  border-color: var(--border-strong);
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.boot-screen,
+.welcome-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+
+.boot-screen {
+  color: var(--muted);
+}
+
+.boot-error-panel {
+  max-width: 640px;
+  text-align: left;
+}
+
+.boot-error-panel code {
+  font-size: 0.9em;
+}
+
+.boot-error-hints {
+  margin: 1rem 0;
+  padding-left: 1.2rem;
+  color: var(--muted);
+}
+
+.welcome-shell {
+  gap: 1.5rem;
+}
+
+.welcome-hero,
+.welcome-panel,
+.panel {
+  width: min(1120px, 100%);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+}
+
+.welcome-hero {
+  padding: 2rem;
+}
+
+.hero-badge {
+  display: inline-flex;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(107, 211, 255, 0.12);
+  color: var(--accent);
+  font-size: 0.8rem;
+}
+
+.welcome-hero h1 {
+  margin: 1rem 0 0.5rem;
+  font-size: clamp(2rem, 4vw, 3.6rem);
+}
+
+.welcome-hero p,
+.panel-header p,
+.brand-block p,
+.profile-chip p,
+.topbar p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.welcome-panel {
+  padding: 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.form-grid .full {
+  grid-column: 1 / -1;
+}
+
+label {
+  display: grid;
+  gap: 0.45rem;
+  font-size: 0.92rem;
+}
+
+.primary-btn {
+  background: var(--accent-soft);
+  color: #07121f;
+  border: 0;
+  font-weight: 700;
+}
+
+.inline-error,
+.inline-success {
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+  font-size: 0.9rem;
+}
+
+.inline-error {
+  background: rgba(255, 123, 123, 0.14);
+  color: #ffb3b3;
+}
+
+.inline-success {
+  background: rgba(87, 211, 137, 0.14);
+  color: #9cf0bb;
+}
+
+.profile-preview-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.profile-preview {
+  padding: 0.9rem 1rem;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+
+.console-shell {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+}
+
+.console-sidebar {
+  padding: 1.5rem 1rem;
+  border-right: 1px solid var(--border);
+  background: rgba(6, 12, 22, 0.7);
+  backdrop-filter: blur(18px);
+}
+
+.brand-block,
+.profile-chip {
+  display: flex;
+  gap: 0.9rem;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: rgba(13, 25, 42, 0.6);
+}
+
+.brand-mark,
+.profile-avatar {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: var(--accent-soft);
+  color: #05111b;
+  font-weight: 800;
+}
+
+.profile-chip {
+  margin-top: 1rem;
+}
+
+.sidebar-nav {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+.sidebar-nav button {
+  padding: 0.95rem 1rem;
+  text-align: left;
+  background: transparent;
+}
+
+.sidebar-nav button span,
+.sidebar-nav button small {
+  display: block;
+}
+
+.sidebar-nav button small {
+  margin-top: 0.2rem;
+  color: var(--muted);
+}
+
+.sidebar-nav button.active {
+  background: rgba(107, 211, 255, 0.12);
+  border-color: rgba(107, 211, 255, 0.35);
+}
+
+.console-main {
+  padding: 1.25rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: rgba(9, 18, 31, 0.72);
+}
+
+.topbar h1,
+.panel-header h3 {
+  margin: 0;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.status-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--success);
+}
+
+.status-dot::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.view-frame {
+  min-height: 0;
+}
+
+.workspace-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.workspace-chat {
+  grid-template-columns: 280px minmax(0, 1fr) 320px;
+}
+
+.workspace-files,
+.workspace-profiles,
+.settings-grid {
+  grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+}
+
+.panel {
+  padding: 1rem;
+  min-width: 0;
+}
+
+.panel-toolbar {
+  margin-bottom: 1rem;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.search-input {
+  margin-bottom: 0.9rem;
+}
+
+.session-list,
+.tree-list,
+.profile-list {
+  display: grid;
+  gap: 0.65rem;
+  max-height: 72vh;
+  overflow: auto;
+}
+
+.session-card,
+.tree-entry,
+.profile-card,
+.kanban-card,
+.stat-card {
+  padding: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(15, 27, 45, 0.6);
+}
+
+.session-card.active,
+.tree-entry.active,
+.profile-card.active {
+  border-color: rgba(107, 211, 255, 0.45);
+  background: rgba(107, 211, 255, 0.1);
+}
+
+.session-card span,
+.session-card small,
+.tree-entry span,
+.profile-card span,
+.kanban-tags,
+.message-meta,
+.meta-list span,
+.danger-text {
+  color: var(--muted);
+}
+
+.chat-panel-shell,
+.editor-panel {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 72vh;
+}
+
+.messages-stream {
+  overflow: auto;
+  display: grid;
+  gap: 0.9rem;
+  padding-right: 0.25rem;
+}
+
+.message-row {
+  max-width: 85%;
+}
+
+.message-row.user {
+  margin-left: auto;
+}
+
+.message-bubble,
+.tool-card,
+.empty-panel {
+  padding: 1rem;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: rgba(10, 20, 34, 0.78);
+  white-space: pre-wrap;
+}
+
+.message-row.user .message-bubble {
+  background: rgba(49, 116, 255, 0.16);
+}
+
+.tool-card pre {
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+.composer {
+  margin-top: 1rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+
+.composer textarea,
+.editor-textarea {
+  min-height: 140px;
+}
+
+.composer-actions,
+.drawer-actions,
+.settings-actions,
+.create-inline,
+.tree-breadcrumb,
+.toolbar-grid,
+.meta-list,
+.stats-grid {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.meta-list {
+  display: grid;
+}
+
+.meta-list > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.usage-pill {
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(107, 211, 255, 0.12);
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+
+.kanban-board {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(260px, 1fr);
+  gap: 1rem;
+  overflow: auto;
+}
+
+.kanban-column {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  min-height: 70vh;
+}
+
+.kanban-column-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.kanban-column-body {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.9rem;
+}
+
+.lane-title {
+  margin: 0.5rem 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.kanban-card-title {
+  margin-bottom: 0.45rem;
+  font-weight: 600;
+}
+
+.kanban-tags span {
+  display: inline-flex;
+  margin-right: 0.45rem;
+}
+
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 8, 14, 0.6);
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(520px, 100vw);
+  height: 100vh;
+  overflow: auto;
+  padding: 1.25rem;
+  background: #0d1727;
+  border-left: 1px solid var(--border);
+}
+
+.drawer-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.run-row {
+  margin: 0.75rem 0;
+  padding: 0.75rem 0.9rem;
+  border-left: 3px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.run-row.completed {
+  border-color: var(--success);
+}
+
+.run-row.blocked {
+  border-color: var(--warning);
+}
+
+.checkbox-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.checkbox-row input {
+  width: auto;
+}
+
+.mobile-nav-btn {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .workspace-chat,
+  .workspace-files,
+  .workspace-profiles,
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 880px) {
+  .console-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .console-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(320px, 85vw);
+    transform: translateX(-100%);
+    transition: transform 140ms ease;
+    z-index: 30;
+  }
+
+  .console-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .mobile-nav-btn {
+    display: inline-flex;
+  }
+
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 720px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .kanban-board {
+    grid-auto-columns: 85vw;
+  }
+}

@@ -1,0 +1,16 @@
+.DS_Store
+.emperor/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+dashboard/node_modules/
+dashboard/.tmpverify/
+.uv-cache/
+.run/
+docs/ROADMAP.md
